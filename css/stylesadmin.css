@@ -1,0 +1,57 @@
+/* Cài đặt chung cho bảng */
+#duLieuBang{
+    width: 100%;
+    border-collapse: collapse; /* Gộp các đường viền */
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Định dạng cho ô tiêu đề và ô dữ liệu */
+#duLieuBang th, #duLieuBang td{
+    border: 1px solid #ddd; /* Đường viền mỏng, màu xám nhạt */
+    padding: 10px;          /* Khoảng cách bên trong ô */
+    text-align: left;       /* Canh lề trái */
+}
+
+/* Định dạng riêng cho tiêu đề bảng */
+#duLieuBang th{
+    background-color: #f2f2f2; /* Nền nhẹ cho tiêu đề */
+    font-weight: bold;
+}
+
+/* CSS cho nút chức năng trong ô cuối*/
+#duLieuBang td .btn{
+    margin-right: 5px; /* Khoảng cách giữa các nút */
+    white-space: nowrap; /* Giữ nút không xuống dòng */
+}
+
+#duLieuBang td{
+    text-align: left;    
+    vertical-align: middle;
+    padding: 10px;          
+}
+
+#duLieuBang th{
+    text-align: center;    
+    vertical-align: middle;
+    padding: 10px;          
+}
+
+.duLieuSo{
+    text-align: center !important;
+}
+
+a{
+    text-decoration: none;
+}
+
+/* Ẩn nút mũi tên trong dataTables */
+th.sorting::after, th.sorting::before,
+th.sorting_asc::after, th.sorting_asc::before,
+th.sorting_desc::after, th.sorting_desc::before {
+    display: none !important;
+}
+
+th.active-sorting::after, th.active-sorting::before {
+    display: inline-block !important; /* Hiện lại khi cột được chọn */
+}
