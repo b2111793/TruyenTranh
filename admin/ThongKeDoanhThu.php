@@ -137,7 +137,7 @@
         <!-- Biểu đồ doanh thu theo ngày trong tuần -->
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-chart-line"></i> Doanh thu theo ngày trong tuần hiện tại
+                <i class="fas fa-chart-line me-2"></i>Doanh thu theo ngày trong tuần hiện tại
             </div>
             <div class="card-body">
                 <canvas id="doanhThuTuanChart" height="100"></canvas>
@@ -147,7 +147,7 @@
         <!-- Biểu đồ doanh thu theo tuần trong tháng -->
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-chart-line"></i> Doanh thu theo tuần trong tháng hiện tại (Tháng <?php echo date('m/Y'); ?>)
+                <i class="fas fa-chart-line me-2"></i>Doanh thu theo tuần trong tháng hiện tại (Tháng <?php echo date('m/Y'); ?>)
             </div>
             <div class="card-body">
                 <canvas id="doanhThuThangChart" height="100"></canvas>
@@ -157,7 +157,7 @@
         <!-- Biểu đồ doanh thu theo tháng trong năm -->
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-chart-line"></i> Doanh thu theo tháng trong năm hiện tại (Năm <?php echo date('Y'); ?>)
+                <i class="fas fa-chart-line me-2"></i>Doanh thu theo tháng trong năm hiện tại (Năm <?php echo date('Y'); ?>)
             </div>
             <div class="card-body">
                 <canvas id="doanhThuNamChart" height="100"></canvas>
@@ -167,7 +167,7 @@
         <!-- Bảng chi tiết doanh thu -->
         <div class="card mb-4">
             <div class="card-header">
-                <b><i class="fas fa-box"></i> Bảng chi tiết doanh thu</b>
+                <b><i class="fas fa-box me-2"></i>Bảng chi tiết doanh thu</b>
             </div>
             <div class="card-body">
                 <table id="duLieuBang">

@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input id="hoTen" name="hoTen" type="text">
                     </div>
                     <div class="address">
-                        <span>Ngày sinh</span>
+                        <span>Ngày sinh <span style="color: red;">*</span></span>
                         <input id="ngaySinh" name="ngaySinh" type="date">
                     </div>
                     <div class="address">
@@ -154,15 +154,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return emailRegex.test(email);
     }
 
+    function tinhTuoi(ngaySinhStr) {
+    const ngaySinh = new Date(ngaySinhStr);
+    const today = new Date();
+
+    let tuoi = today.getFullYear() - ngaySinh.getFullYear();
+    const thangHienTai = today.getMonth();
+    const ngayHienTai = today.getDate();
+
+    if (
+        thangHienTai < ngaySinh.getMonth() || (thangHienTai === ngaySinh.getMonth() && ngayHienTai < ngaySinh.getDate())
+    ) {
+        tuoi--;
+    }
+
+    return tuoi;
+}
+
     $(document).ready(function () {
         $('#dangKy').click(function () {
             let tenDangNhap = $('#tenDangNhap').val();
             let matKhau = $('#matKhau').val();
             let matKhauNhapLai = $('#matKhauNhapLai').val();
+            let ngaySinh = $('#ngaySinh').val();
+
+            let ngaySinhTinhGio = new Date(ngaySinh).setHours(0, 0, 0, 0);
+            let ngayHomNay = new Date().setHours(0, 0, 0, 0);
             let dienThoai = $('#dienThoai').val();
             let email = $('#email').val();
 
-            if (tenDangNhap == "" || matKhau == "" || matKhauNhapLai == "" || email == "" || dienThoai == "") {
+            if (tenDangNhap == "" || matKhau == "" || matKhauNhapLai == "" || ngaySinh == "" || email == "" || dienThoai == "") {
                 toastr.error("Hãy nhập đầy đủ các trường bắt buộc!");
                 return false;
             } else if (matKhau.length < 6) {
@@ -170,6 +191,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 return false;
             } else if (matKhau != matKhauNhapLai) {
                 toastr.error("Mật khẩu không trùng khớp!");
+                return false;
+            } else if(ngaySinhTinhGio >= ngayHomNay){
+                toastr.error("Ngày sinh không hợp lệ!");
+                return false;
+            } else if(tinhTuoi(ngaySinh) < 18){
+                toastr.error("Bạn chưa đủ 18 tuổi để đăng ký tài khoản!");
                 return false;
             } else if (isNaN(dienThoai) || dienThoai.length < 10) {
                 toastr.error("Số điện thoại không hợp lệ!");

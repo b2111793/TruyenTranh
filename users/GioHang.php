@@ -96,6 +96,7 @@
                                     <input id="soLuongDat" type="number" 
                                         onchange="capNhat_gioHang(<?php echo $cotGioHang['maSanPham']; ?>, $(this).val())"
                                         value="<?php echo $cotGioHang['soLuong']; ?>"
+                                        min=0 max=<?php echo $cotGioHang['soLuongSanPhamHienCon']; ?>
                                     >
                                 </span>
                             </li>

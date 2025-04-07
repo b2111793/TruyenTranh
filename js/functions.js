@@ -8,7 +8,43 @@ function timKiem_sanPham(tacGia, xuatXu, loaiSanPham) {
             loaiSanPham: loaiSanPham
         },
         success: function(giaTri) {
+            // Chèn nội dung từ TimKiemAjax.php vào DOM
             $('#load_sanPham').html(giaTri);
+
+            // Sau khi nội dung được chèn, gọi hàm kiểm tra trạng thái yêu thích
+            kiemTra_trangThaiYeuThich();
+
+            // Gọi hàm cập nhật số lượng yêu thích
+            capNhatSoLuongYeuThich();
+
+            // Xử lý logic "Xem tiếp"/"Ẩn bớt"
+            var soSanPhamMoiLanHienThi = 6;
+            var soSanPhamHienTai = 6;
+            var tongSoSanPham = $('.product-one').length; // Tổng số sản phẩm
+            var soSanPhamBanDau = 6;
+
+            $("#xemTiepButton").click(function() {
+                var soSanPhamTiepTheo = Math.min(soSanPhamHienTai + soSanPhamMoiLanHienThi, tongSoSanPham);
+                for (var i = soSanPhamHienTai + 1; i <= soSanPhamTiepTheo; i++) {
+                    $(".product-one[data-index='" + i + "']").removeClass("hidden");
+                }
+                soSanPhamHienTai = soSanPhamTiepTheo;
+                if (soSanPhamHienTai > soSanPhamBanDau) {
+                    $("#anBotButton").show();
+                }
+                if (soSanPhamHienTai >= tongSoSanPham) {
+                    $("#xemTiepButton").hide();
+                }
+            });
+
+            $("#anBotButton").click(function() {
+                for (var i = soSanPhamBanDau + 1; i <= tongSoSanPham; i++) {
+                    $(".product-one[data-index='" + i + "']").addClass("hidden");
+                }
+                soSanPhamHienTai = soSanPhamBanDau;
+                $("#xemTiepButton").show();
+                $("#anBotButton").hide();
+            });
         },
         error: function(xhr, status, error) {
             console.log("Lỗi Ajax: " + error);
@@ -104,6 +140,29 @@ function them_gioHang(maSanPham, soLuong) {
     }
 }
 
+function kiemTra_trangThaiYeuThich() {
+    $('.heart-icon').each(function() {
+        let icon = $(this);
+        let maSanPham = icon.data('product-id');
+        
+        $.ajax({
+            url: "../ajax/KiemTraYeuThichAjax.php", 
+            type: "POST",
+            data: {
+                maSanPham: maSanPham
+            },
+            success: function(giaTri) {
+                if (giaTri === "Đã yêu thích") {
+                    icon.removeClass('far').addClass('fas');
+                    icon.addClass('liked');
+                }
+            },
+            error: function() {
+                console.log("Lỗi khi kiểm tra trạng thái yêu thích");
+            }
+        });
+    });
+}
 
 function them_yeuThich(maSanPham) {
     $.ajax({
@@ -113,38 +172,17 @@ function them_yeuThich(maSanPham) {
             maSanPham: maSanPham
         },
         success: function (giaTri) {
-            // if (giaTri === "Sản phẩm đã có trong danh sách yêu thích!") {
-            //     Swal.fire({
-            //         title: 'Thông báo',
-            //         text: giaTri, 
-            //         icon: 'info',
-            //         confirmButtonText: 'OK'
-            //     }).then(() => {
-            //         window.location.href = "./ChiTietSanPham.php?MaSanPham=" + maSanPham;
-            //     });
-            // } else 
             if(giaTri === "Đã thêm sản phẩm vào danh sách yêu thích!"){
-                Swal.fire({
-                    title: 'Thông báo',
-                    text: giaTri, 
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    window.location.href = "./ChiTietSanPham.php?MaSanPham=" + maSanPham;
-                });
-            }else{
-                Swal.fire({
-                    title: 'Thông báo',
-                    text: giaTri, 
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    window.location.href = "./ChiTietSanPham.php?MaSanPham=" + maSanPham;
-                });
+                toastr.success(giaTri, 'Thông báo');
+                // Cập nhật trạng thái icon thành "đã yêu thích"
+                $(`.heart-icon[data-product-id="${maSanPham}"]`).removeClass('far').addClass('fas').addClass('liked');
+                // Cập nhật số lượng yêu thích ở header
+                capNhatSoLuongYeuThich();
+            } else {
+                toastr.error(giaTri, 'Lỗi');
             }
         },
         error: function () {
-            // Hiển thị thông báo lỗi nếu AJAX thất bại
             Swal.fire({
                 title: 'Lỗi!',
                 text: 'Có lỗi xảy ra khi thêm vào yêu thích. Vui lòng thử lại.',
@@ -156,56 +194,76 @@ function them_yeuThich(maSanPham) {
 }
 
 function xoa_yeuThich(maSanPham) {
-    Swal.fire({
-        title: 'Xóa sản phẩm yêu thích',
-        text: "Bạn có chắc chắn muốn xóa sản phẩm khỏi danh sách yêu thích?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Xóa',
-        cancelButtonText: 'Hủy',
-        reverseButtons: true 
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: "../ajax/XoaYeuThichAjax.php",
-                type: "POST",
-                data: {
-                    maSanPham: maSanPham
-                },
-                success: function (giaTri) {
-                    if(giaTri === "Đã xóa sản phẩm khỏi danh sách yêu thích!"){
-                        Swal.fire({
-                            title: 'Thông báo',
-                            text: giaTri, 
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then(() => {
-                            window.location.href = "./SanPhamYeuThich.php";
-                        });
-                    }else{
-                        Swal.fire({
-                            title: 'Thông báo',
-                            text: giaTri, 
-                            icon: 'warning',
-                            confirmButtonText: 'OK'
-                        }).then(() => {
-                            window.location.href = "./SanPhamYeuThich.php";
-                        });
-                    }
-                },
-                error: function () {
-                    Swal.fire({
-                        title: 'Lỗi!',
-                        text: 'Có lỗi xảy ra khi thêm vào yêu thích. Vui lòng thử lại.',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
+    $.ajax({
+        url: "../ajax/XoaYeuThichAjax.php",
+        type: "POST",
+        data: {
+            maSanPham: maSanPham
+        },
+        success: function (giaTri) {
+            if(giaTri === "Đã xóa sản phẩm khỏi danh sách yêu thích!"){
+                toastr.info(giaTri, 'Thông báo');
+                // Xóa sản phẩm khỏi giao diện
+                $(`.cart-header[data-product-id="${maSanPham}"]`).remove();
+                $(`.heart-icon[data-product-id="${maSanPham}"]`).removeClass('fas').addClass('far').removeClass('liked');
+                // Cập nhật số lượng yêu thích ở header
+                capNhatSoLuongYeuThich();
+                // Cập nhật trạng thái nút "Xem thêm"/"Ẩn bớt"
+                capNhatTrangThaiNutXemThem();
+                // Kiểm tra nếu danh sách trống thì hiển thị thông báo
+                if ($('.cart-header').length === 0) {
+                    $('.in-check').html('<p>Bạn chưa có sản phẩm yêu thích nào.</p>');
                 }
+            } else {
+                toastr.error(giaTri, 'Lỗi');
+            }
+        },
+        error: function () {
+            Swal.fire({
+                title: 'Lỗi!',
+                text: 'Có lỗi xảy ra khi xóa yêu thích. Vui lòng thử lại.',
+                icon: 'error',
+                confirmButtonText: 'OK'
             });
+        }
+    });  
+}
+
+function capNhatSoLuongYeuThich() {
+    $.ajax({
+        url: "../ajax/LaySoLuongYeuThichAjax.php",
+        type: "POST",
+        success: function(total) {
+            // Cập nhật số lượng hiển thị ở header
+            $('#soLuongYeuThich').text(total);
+        },
+        error: function() {
+            console.log("Lỗi khi lấy số lượng yêu thích");
         }
     });
 }
 
+function capNhatTrangThaiNutXemThem() {
+    const soSanPhamToiDa = 5;
+    const soSanPhamHienTai = $('.cart-header').length;
+
+    if (soSanPhamHienTai <= soSanPhamToiDa) {
+        // Nếu số sản phẩm còn lại <= 5, ẩn cả hai nút "Xem thêm" và "Ẩn bớt"
+        $('#xemThemYeuThich').hide();
+        $('#anYeuThich').hide();
+    } else {
+        // Nếu số sản phẩm > 5, kiểm tra trạng thái hiện tại của danh sách
+        if ($('.anDoiTuong:visible').length > 0) {
+            // Nếu đang hiển thị các sản phẩm ẩn, giữ nút "Ẩn bớt"
+            $('#xemThemYeuThich').hide();
+            $('#anYeuThich').show();
+        } else {
+            // Nếu các sản phẩm đang ẩn, giữ nút "Xem thêm"
+            $('#xemThemYeuThich').show();
+            $('#anYeuThich').hide();
+        }
+    }
+}
 
 function capNhat_gioHang(maSanPham, soLuong){
     soLuong = Number(soLuong);

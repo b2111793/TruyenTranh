@@ -29,7 +29,7 @@
 
         <div class="card mb-4">
             <div class="card-header">
-                <b><i class="fas fa-comments"></i> Danh sách bình luận</b>
+                <b><i class="fas fa-comments me-2"></i>Danh sách bình luận</b>
             </div>
             <div class="card-body">
                 <table id="duLieuBang">
@@ -53,7 +53,7 @@
                                 <td class="duLieuSo"><?php echo date("d/m/Y", strtotime($binhLuan["NgayBinhLuan"])); ?></td>
                                 <td class="duLieuSo">
                                     <a href="#" class="btn btn-danger btn-xoa-binh-luan" data-id="<?php echo $binhLuan["MaBinhLuan"]; ?>">
-                                        <i class="fas fa-trash"></i> Xóa
+                                        <i class="fas fa-trash me-2"></i>Xóa
                                     </a>
                                 </td>
                             </tr>

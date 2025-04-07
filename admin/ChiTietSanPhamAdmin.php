@@ -57,7 +57,7 @@
                     <img height="400px" src="<?php echo $sanPham["AnhMoTa3"]; ?>" alt="Ảnh sản phẩm">
                 </div>
                 <br>
-                <a href="./QuanLySanPham.php" class="btn btn-secondary">Quay lại</a>
+                <a href="./QuanLySanPham.php" class="btn btn-secondary">Quay về trang sản phẩm</a>
             </div>
         </div>
     </div>

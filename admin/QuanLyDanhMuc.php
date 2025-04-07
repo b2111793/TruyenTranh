@@ -25,12 +25,12 @@
 
         <div class="card-body mb-2">
             <a href="./ThemDanhMuc.php" class="btn btn-success">
-                <i class="fas fa-plus"></i> Thêm danh mục</a>
+                <i class="fas fa-plus me-2"></i>Thêm danh mục</a>
         </div>
                             
         <div class="card mb-4">
             <div class="card-header">
-                <b><i class="fas fa-tags"></i> Các thể loại truyện tranh</b>
+                <b><i class="fas fa-tags me-2"></i>Các thể loại truyện tranh</b>
             </div>
             <div class="card-body">
                 <table id="duLieuBang">
@@ -50,9 +50,9 @@
                                 <td><?php echo $loaiSanPham["MoTa"]; ?></td>
                                 <td class="duLieuSo">
                                     <a href="./SuaDanhMuc.php?maLoaiSP=<?php echo $loaiSanPham["MaLoaiSP"]; ?>" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Sửa</a>
+                                        <i class="fas fa-edit me-2"></i>Sửa</a>
                                     <a href="#" class="btn btn-danger btn-xoa-danh-muc" data-id="<?php echo $loaiSanPham["MaLoaiSP"]; ?>">
-                                        <i class="fas fa-trash me-1"></i>Xóa
+                                        <i class="fas fa-trash me-2"></i>Xóa
                                     </a>
                                 </td>
                             </tr>

@@ -3,15 +3,25 @@
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy;  2025</div>
                             <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
+                                <a href="../admin/TrangChuAdmin.php?thamQuan=1">Bí ẩn chưa có hồi kết - Tự do trong thế giới truyện tranh</a>
+                                | Thiết kế bởi
+                                    <a href="#">Ha Lê</a>
                             </div>
                         </div>
                     </div>
                 </footer>
             </div>
         </div>
+<?php
+    if(isset($_GET["thamQuan"])){
+        $_GET["thamQuan"] = null;
+        session_unset(); 
+        session_destroy(); 
+        echo "<script> window.location.href = '../users/TrangChu.php'; </script>";
+        exit;
+    }
+?>
+
     <!-- Hiển thị thông báo Toastr -->
 <?php if (isset($_SESSION['toastr'])): ?>
     <script>

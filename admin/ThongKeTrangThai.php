@@ -19,16 +19,16 @@
 
 <main>
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Thống kê</h1>
+        <h1 class="mt-4">Đơn hàng</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="./TrangChuAdmin.php">Trang chủ</a></li>
-            <li class="breadcrumb-item">Thống kê</li>
-            <li class="breadcrumb-item active">Trạng thái các đơn đặt hàng</li>
+            <li class="breadcrumb-item">Đơn hàng</li>
+            <li class="breadcrumb-item active">Trạng thái đơn hàng</li>
         </ol>
     
         <div class="card mb-4">
             <div class="card-header">
-                <b><i class="fas fa-box"></i> Trạng thái các đơn đặt hàng</b>
+                <b><i class="fas fa-list me-2"></i>Trạng thái các đơn đặt hàng</b>
         </div>
         <div class="card-body">
             <table id="duLieuBang">
@@ -47,6 +47,7 @@
                     <?php } ?>
                 </tbody>
             </table>
+            <a href="./QuanLyDonHang.php" class="btn btn-secondary">Quay lại</a>
         </div>
         </div>
     </div>

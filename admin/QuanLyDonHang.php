@@ -103,9 +103,13 @@
             <li class="breadcrumb-item"><a href="./TrangChuAdmin.php">Trang chủ</a></li>
             <li class="breadcrumb-item active">Quản lý đơn hàng</li>
         </ol>
+        <div class="card-body mb-2">
+            <a href="./ThongKeTrangThai.php" class="btn btn-success">
+                <i class="fas fa-list me-2"></i>Thống kê trạng thái</a>
+        </div>
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-table me-1"></i>
+                <i class="fas fa-table me-2"></i>
                 Danh sách đơn đặt
             </div>
             <div class="card-body">
@@ -187,7 +191,7 @@
                                 </td>
                                 <td class="duLieuSo">
                                     <a href="ChiTietDonHang.php?maDonDat=<?php echo $donDat['MaDonDat']; ?>" class="btn btn-info btn-sm">
-                                        <i class="fas fa-angle-double-down"></i> Xem chi tiết
+                                        <i class="fas fa-angle-double-down me-2"></i>Xem chi tiết
                                     </a>
                                 </td>
                             </tr>

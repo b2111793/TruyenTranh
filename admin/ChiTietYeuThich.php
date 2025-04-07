@@ -54,10 +54,13 @@
                 <p><strong>Tên:</strong> <?php echo $sanPham["TenSanPham"]; ?></p>
                 <p><strong>Tác giả:</strong> <?php echo $sanPham["TacGia"]; ?></p>
                 <p><strong>Xuất xứ:</strong> <?php echo $sanPham["XuatXu"]; ?></p>
-                <img height="200px" src="<?php echo $sanPham["Anh"]; ?>" alt="Ảnh sản phẩm">
+                <a href="./ChiTietSanPhamAdmin.php?maSanPham=<?php echo $sanPham["MaSanPham"]; ?>">
+                    <img height="200px" src="<?php echo $sanPham["Anh"]; ?>" alt="Ảnh sản phẩm">
+                    <br>(Xem chi tiết hơn về sản phẩm)
+                </a>
             </div>
             <div class="card-body">
-                <b><i class="fas fa-heart"></i> Danh sách người dùng yêu thích sản phẩm:</b>
+                <b><i class="fas fa-heart me-2"></i>Danh sách người dùng yêu thích sản phẩm:</b>
                 <table id="duLieuBang">
                     <thead>
                         <tr>

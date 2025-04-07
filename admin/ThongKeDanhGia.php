@@ -32,7 +32,7 @@
     
         <div class="card mb-4">
             <div class="card-header">
-                <b><i class="fas fa-star"></i> Sản phẩm được đánh giá nhiều nhất</b>
+                <b><i class="fas fa-star me-2"></i>Sản phẩm được đánh giá nhiều nhất</b>
             </div>
             <div class="card-body">
                 <table id="duLieuBang">
@@ -52,7 +52,7 @@
                                 <td class="duLieuSo"><?php echo $row['TongDanhGia']; ?></td>
                                 <td class="duLieuSo">
                                     <a href="./ChiTietDanhGia.php?maSanPham=<?php echo $row['MaSanPham']; ?>" class="btn btn-info btn-sm">
-                                    <i class="fas fa-angle-double-down"></i> Xem chi tiết
+                                    <i class="fas fa-angle-double-down me-2"></i>Xem chi tiết
                                     </a>
                                 </td>
                             </tr>

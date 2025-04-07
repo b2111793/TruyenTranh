@@ -206,14 +206,14 @@
                         $truyVan_LayYeuThich = mysqli_query($conn, $layYeuThich);
                         $soSanPhamYeuThich = mysqli_num_rows($truyVan_LayYeuThich);
                     ?>
-                    <li><a href="../users/SanPhamYeuThich.php">Yêu thích (<?php echo $soSanPhamYeuThich; ?>)</a></li>
+                    <li><a href="../users/SanPhamYeuThich.php">Yêu thích (<span id="soLuongYeuThich"><?php echo $soSanPhamYeuThich; ?></span>)</a></li>
                     <li>
-                        <a href="ThongTintaiKhoan.php">
-                            <span style="text-transform: none;">Xin chào <?php echo $_SESSION["tenDangNhap"]; ?></span>
+                        <a href="./ThongTintaiKhoan.php">
+                            <span class="tenThanhVien"><?php echo $_SESSION["tenDangNhap"]; ?></span>
                         </a>
                     </li>
-                    <li><a href="#" class="btn btn-danger btn-dang-xuat">
-                            <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất</a>
+                    <li><a href="#" class="btn-dang-xuat">
+                            <i class="fas fa-sign-out-alt me-2"></i> Đăng xuất</a>
                     </li>
 
                 <?php } else{?>

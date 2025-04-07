@@ -171,7 +171,7 @@
                                     
                                     <div class="tangGiamSoLuong">
                                         <button class="giamSoLuong">-</button>
-                                        <input type="number" id="soLuongDat" value="1">
+                                        <input type="number" id="soLuongDat" value=1 min=1 max=<?php echo $cot["SoLuong"]; ?>>
                                         <button class="tangSoLuong">+</button>
                                     </div>
                             
@@ -185,26 +185,20 @@
                             <div class="clearfix"></div>
                             <div class="single-but item_add">
                                 <?php if (isset($_SESSION["tenDangNhap"])) { ?>
+                                    <span> 
+                                        <i class="far fa-heart heart-icon" data-product-id="<?php echo $maSanPham; ?>"></i>
+                                    </span>
                                     <button 
                                         type="button" 
                                         class="btn btn-primary"
                                         style="<?php echo ($cot["SoLuong"] == 0) ? 'cursor: not-allowed !important; opacity: 0.5;' : ''; ?>" 
-                                        <?php echo ($cot["SoLuong"] > 0) ? 'onclick="them_gioHang('.$maSanPham.', $(\'#soLuongDat\').val())"' : ''; ?>>
+                                        <?php echo ($cot["SoLuong"] > 0) ? 'onclick="them_gioHang('.$maSanPham.', $(\'#soLuongDat\').val())"' : ''; ?>
+                                    >
                                         Thêm vào giỏ hàng
-                                    </button>
-                                    <button 
-                                        type="button"
-                                        class="btn btn-danger"
-                                        style="margin-left: 10px; <?php echo ($daYeuThich) ? 'cursor: not-allowed !important; opacity: 0.5;' : ''; ?>"
-                                        <?php echo (!$daYeuThich) ? 'onclick="them_yeuThich('.$maSanPham.')"' : ''; ?>>
-                                        <?php echo ($daYeuThich) ? 'Đã thêm vào yêu thích' : 'Thêm vào yêu thích' ?>
-                                    </button>
+                                    </button>                   
                                 <?php } else { ?>
-                                    <a data-toggle="modal" data-target="#largeModal_dn" href="#" class="btn btn-primary">
+                                    <a data-toggle="modal" data-target="#largeModal_dn" href="#" class="btn btn-success">
                                         Thêm vào giỏ hàng
-                                    </a>
-                                    <a data-toggle="modal" data-target="#largeModal_dn" href="#" class="btn btn-danger" style="margin-left: 10px;">
-                                        Thêm vào yêu thích
                                     </a>
                                 <?php } ?>
                             </div>
@@ -213,7 +207,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <hr>
-
+            
                 <!-- BÌNH LUẬN -->
                 <h3>Bình luận sản phẩm:</h3>
                 <?php if (isset($_SESSION["tenDangNhap"])) { ?>
@@ -271,6 +265,7 @@
                             $index = 0;
                             while ($cotLienQuan = mysqli_fetch_assoc($truyVan_LaySanPham_LienQuan)) {
                                 $index++;
+                                $maSanPham = $cotLienQuan["MaSanPham"];
                             ?>
                                 <div class="product-one">
                                     <div class="col-md-4 product-left single-left"> 
@@ -288,9 +283,25 @@
                                                     <?php echo number_format($cotLienQuan["DonGia"], 0, ',', '.'); ?> đ 
                                                 </span></a>
                                             </p>
-                                            <button type="button" class="btn btn-success" style="margin-top: 10px;"
-                                                onclick="them_gioHang(<?php echo $cotLienQuan['MaSanPham']; ?>, 1)">Thêm vào giỏ hàng
-                                            </button>
+                                            <div class="single-but item_add">
+                                                <?php if (isset($_SESSION["tenDangNhap"])) { ?>
+                                                    <span> 
+                                                        <i class="far fa-heart heart-icon" data-product-id="<?php echo $maSanPham; ?>"></i>
+                                                    </span>
+                                                    <button 
+                                                        type="button" 
+                                                        class="btn btn-success btn-them-gio-hang"
+                                                        style="<?php echo ($cot["SoLuong"] == 0) ? 'cursor: not-allowed !important; opacity: 0.5;' : ''; ?>" 
+                                                        <?php echo ($cot["SoLuong"] > 0) ? 'onclick="them_gioHang('.$maSanPham.', 1)"' : ''; ?>
+                                                    >
+                                                        Thêm vào giỏ hàng
+                                                    </button>                   
+                                                <?php } else { ?>
+                                                    <a data-toggle="modal" data-target="#largeModal_dn" href="#" class="btn btn-success btn-them-gio-hang" style="margin: auto;">
+                                                        Thêm vào giỏ hàng
+                                                    </a>
+                                                <?php } ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -435,6 +446,20 @@
             let value = parseInt(soLuong.val());
             if (value > 1) {
                 soLuong.val(value - 1);
+            }
+        });
+
+        // Thêm xóa yêu thích
+        $('.heart-icon').on('click', function() {
+            let icon = $(this);
+            let maSanPham = icon.data('product-id');
+
+            if (icon.hasClass('liked')) {
+                // Nếu đã yêu thích, gọi hàm xóa
+                xoa_yeuThich(maSanPham);
+            } else {
+                // Nếu chưa yêu thích, gọi hàm thêm
+                them_yeuThich(maSanPham);
             }
         });
  

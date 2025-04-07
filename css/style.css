@@ -2021,6 +2021,76 @@ div.divTrang a{
 	background-color: #8e2222; /* đỏ tối hơn khi hover */
   }
   
-  
-  
+/* Định dạng cơ bản cho tenThanhVien (Conan) */
+.tenThanhVien {
+	text-transform: none;
+    color: #2B6CB0; /* Màu xanh dương đậm để nổi bật */
+    font-weight: 600; /* Làm đậm chữ */
+    position: relative; /* Để tạo hiệu ứng gạch chân động */
+    text-decoration: none; /* Không gạch chân ban đầu */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi mượt mà */
+    padding: 5px 10px; /* Thêm padding để trông đẹp hơn */
+}
 
+/* Thêm biểu tượng người dùng trước tên */
+.tenThanhVien::before {
+    content: '\1F464'; /* Unicode của biểu tượng người dùng */
+    margin-right: 5px; /* Khoảng cách giữa biểu tượng và chữ */
+    font-size: 1.2em; /* Kích thước biểu tượng */
+}
+
+/* Hiệu ứng hover */
+.tenThanhVien:hover {
+    color: #1A4971; /* Đổi màu chữ sang xanh đậm hơn */
+    background-color: #E2E8F0; /* Thêm nền xám nhạt khi hover */
+    border-radius: 4px; /* Bo góc nhẹ */
+}
+
+/* Hiệu ứng gạch chân động khi hover */
+.tenThanhVien::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #2B6CB0; /* Màu gạch chân trùng với màu chữ */
+    transition: width 0.3s ease;
+}
+
+.tenThanhVien:hover::after {
+    width: 100%; /* Gạch chân mở rộng từ trái sang phải */
+}
+
+/* Định dạng icon trái tim */
+.heart-icon {
+    font-size: 32px; /* Kích thước icon */
+    color: black; /* Màu viền đen mặc định */
+    cursor: pointer; /* Con trỏ chuột dạng bàn tay khi hover */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi mượt mà */
+}
+
+/* Trạng thái yêu thích (tô màu đỏ) */
+.heart-icon.liked {
+    color: red; /* Màu đỏ khi yêu thích */
+}
+
+.heart-icon:hover {
+    transform: scale(1.4);
+}
+
+.single-but {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa icon và nút */
+}
+
+@media(max-width:768px){
+	.heart-icon {
+		font-size: 16px;
+	}
+	.btn-them-gio-hang{
+		font-size: 7px;
+		padding: 3px 6px;
+	}
+}

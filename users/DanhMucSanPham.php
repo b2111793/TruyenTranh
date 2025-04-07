@@ -57,7 +57,7 @@
 						$index = 0;
 						while($cot = mysqli_fetch_assoc($truyVan_LaySP)){ 
 							$index++;
-						 
+							$maSanPham = $cot["MaSanPham"];
 					?>
 					<div class="product-one">
 						<div class="col-md-4 product-left single-left"> 
@@ -75,9 +75,25 @@
 										<?php echo number_format($cot["DonGia"], 0, ',', '.'); ?> đ 
 									</span></a>
 								</p>
-								<button type="button" class="btn btn-success" style="margin-top: 10px;"
-									onclick="them_gioHang(<?php echo $cot['MaSanPham']; ?>, 1)">Thêm vào giỏ hàng
-								</button>
+								<div class="single-but item_add">
+									<?php if (isset($_SESSION["tenDangNhap"])) { ?>
+										<span> 
+											<i class="far fa-heart heart-icon" data-product-id="<?php echo $maSanPham; ?>"></i>
+										</span>
+										<button 
+											type="button" 
+											class="btn btn-success btn-them-gio-hang"
+											style="<?php echo ($cot["SoLuong"] == 0) ? 'cursor: not-allowed !important; opacity: 0.5;' : ''; ?>" 
+											<?php echo ($cot["SoLuong"] > 0) ? 'onclick="them_gioHang('.$maSanPham.', 1)"' : ''; ?>
+										>
+											Thêm vào giỏ hàng
+										</button>                   
+									<?php } else { ?>
+										<a data-toggle="modal" data-target="#largeModal_dn" href="#" class="btn btn-success btn-them-gio-hang" style="margin: auto;">
+											Thêm vào giỏ hàng
+										</a>
+									<?php } ?>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -120,5 +136,22 @@
 	</div>
 	</div>
 	<!--end-product-->
+
+<script>
+	$(document).ready(function(){
+		$('.heart-icon').on('click', function() {
+            let icon = $(this);
+            let maSanPham = icon.data('product-id');
+
+            if (icon.hasClass('liked')) {
+                // Nếu đã yêu thích, gọi hàm xóa
+                xoa_yeuThich(maSanPham);
+            } else {
+                // Nếu chưa yêu thích, gọi hàm thêm
+                them_yeuThich(maSanPham);
+            }
+        });
+	});
+</script>
 
 <?php include('../shared/footer.php'); ?>

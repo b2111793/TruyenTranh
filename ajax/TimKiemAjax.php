@@ -33,11 +33,11 @@
 <div class="clearfix"> </div>
 <div id="productContainer">
 <?php 
-    $index = 0;
-    while ($cot = mysqli_fetch_assoc($truyVan_LaySanPham)) { 
-        $index++;
-        // Thêm class 'hidden' cho các sản phẩm từ thứ 7 trở đi
-        $isHidden = ($index > 6) ? 'hidden' : '';
+$index = 0;
+while ($cot = mysqli_fetch_assoc($truyVan_LaySanPham)) { 
+    $index++;
+    $maSanPham = $cot["MaSanPham"];
+    $isHidden = ($index > 6) ? 'hidden' : '';
 ?>
     <div class="product-one <?php echo $isHidden; ?>" data-index="<?php echo $index; ?>">
         <div class="col-md-4 product-left single-left"> 
@@ -55,77 +55,41 @@
                         <?php echo number_format($cot["DonGia"], 0, ',', '.'); ?> đ 
                     </span></a>
                 </p>
-                <button type="button" class="btn btn-success" style="margin-top: 10px;"
-                    onclick="addToCart(<?php echo $cot['MaSanPham']; ?>, 1)">Thêm vào giỏ hàng
-                </button>
+                <div class="single-but item_add">
+                    <?php if (isset($_SESSION["tenDangNhap"])) { ?>
+                        <span> 
+                            <i class="far fa-heart heart-icon" data-product-id="<?php echo $maSanPham; ?>"></i>
+                        </span>
+                        <button 
+                            type="button" 
+                            class="btn btn-success btn-them-gio-hang"
+                            style="<?php echo ($cot["SoLuong"] == 0) ? 'cursor: not-allowed !important; opacity: 0.5;' : ''; ?>" 
+                            <?php echo ($cot["SoLuong"] > 0) ? 'onclick="them_gioHang('.$maSanPham.', 1)"' : ''; ?>
+                        >
+                            Thêm vào giỏ hàng
+                        </button>                   
+                    <?php } else { ?>
+                        <a data-toggle="modal" data-target="#largeModal_dn" href="#" class="btn btn-success btn-them-gio-hang" style="margin: auto;">
+                            Thêm vào giỏ hàng
+                        </a>
+                    <?php } ?>
+                </div>
             </div>
         </div>
     </div>
 <?php 
-        // Thêm div.clearfix sau mỗi 3 sản phẩm
-        if ($index % 3 == 0) { ?>
-            <div class="clearfix"> </div>
-<?php   }
-    } 
+    if ($index % 3 == 0) { ?>
+        <div class="clearfix"> </div>
+<?php }
+} 
 ?>
 </div>
 
 <?php 
-    // Hiển thị nút "Xem tiếp" và "Ẩn bớt" nếu có nhiều hơn 6 sản phẩm
-    if ($tongSoSanPham > 6) { ?>
-        <div class="clearfix"> </div>
-        <div style="text-align: center; margin-top: 20px;">
-            <button id="anBotButton" class="btn btn-secondary" style="display: none;">Ẩn bớt</button>
-            <button id="xemTiepButton" class="btn btn-primary">Xem tiếp</button>
-        </div>
+if ($tongSoSanPham > 6) { ?>
+    <div class="clearfix"> </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <button id="anBotButton" class="btn btn-secondary" style="display: none;">Ẩn bớt</button>
+        <button id="xemTiepButton" class="btn btn-primary">Xem tiếp</button>
+    </div>
 <?php } ?>
-
-<script>
-    $(document).ready(function() {
-        var soSanPhamMoiLanHienThi = 6;
-        var soSanPhamHienTai = 6; // Số sản phẩm đã hiển thị ban đầu
-        var tongSoSanPham = <?php echo $tongSoSanPham; ?>; // Tổng số sản phẩm
-        var soSanPhamBanDau = 6; // Số sản phẩm hiển thị ban đầu
-
-        // Sự kiện nhấn nút "Xem tiếp"
-        $("#xemTiepButton").click(function() {
-            // Tính số sản phẩm tiếp theo cần hiển thị
-            var soSanPhamTiepTheo = Math.min(soSanPhamHienTai + soSanPhamMoiLanHienThi, tongSoSanPham);
-
-            // Hiển thị các sản phẩm từ (soSanPhamHienTai + 1) đến soSanPhamTiepTheo
-            for (var i = soSanPhamHienTai + 1; i <= soSanPhamTiepTheo; i++) {
-                $(".product-one[data-index='" + i + "']").removeClass("hidden");
-            }
-
-            // Cập nhật số sản phẩm hiện tại
-            soSanPhamHienTai = soSanPhamTiepTheo;
-
-            // Hiển thị nút "Ẩn bớt" nếu có sản phẩm đã được hiển thị thêm
-            if (soSanPhamHienTai > soSanPhamBanDau) {
-                $("#anBotButton").show();
-            }
-
-            // Ẩn nút "Xem tiếp" nếu đã hiển thị hết sản phẩm
-            if (soSanPhamHienTai >= tongSoSanPham) {
-                $("#xemTiepButton").hide();
-            }
-        });
-
-        // Sự kiện nhấn nút "Ẩn bớt"
-        $("#anBotButton").click(function() {
-            // Ẩn tất cả các sản phẩm từ thứ (soSanPhamBanDau + 1) trở đi
-            for (var i = soSanPhamBanDau + 1; i <= tongSoSanPham; i++) {
-                $(".product-one[data-index='" + i + "']").addClass("hidden");
-            }
-
-            // Cập nhật số sản phẩm hiện tại về trạng thái ban đầu
-            soSanPhamHienTai = soSanPhamBanDau;
-
-            // Hiển thị lại nút "Xem tiếp"
-            $("#xemTiepButton").show();
-
-            // Ẩn nút "Ẩn bớt"
-            $("#anBotButton").hide();
-        });
-    });
-</script>

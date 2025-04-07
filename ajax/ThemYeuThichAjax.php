@@ -15,15 +15,6 @@
     $tenDangNhap = mysqli_real_escape_string($conn, $_SESSION["tenDangNhap"]);
     $maSanPham = intval($_POST["maSanPham"]);
 
-    // Kiểm tra sản phẩm đã có trong danh sách yêu thích chưa
-    $kiemTra = "SELECT * FROM yeuthich WHERE TenDangNhap = '$tenDangNhap' AND MaSanPham = '$maSanPham'";
-    $truyVan_KiemTra = mysqli_query($conn, $kiemTra);
-
-    if (mysqli_num_rows($truyVan_KiemTra) > 0) {
-        echo "Sản phẩm đã có trong danh sách yêu thích!";
-        exit;
-    }
-
     // Thêm sản phẩm vào danh sách yêu thích
     $themYeuThich = "INSERT INTO yeuthich (TenDangNhap, MaSanPham) VALUES ('$tenDangNhap', '$maSanPham')";
     if (mysqli_query($conn, $themYeuThich)) {

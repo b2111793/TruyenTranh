@@ -61,8 +61,9 @@
                 <table class="table table-bordered" id="duLieuBang">
                     <thead>
                         <tr>
-                            <th>Ảnh</th>
+                            <th>Mã</th>
                             <th>Tên sản phẩm</th>
+                            <th>Ảnh</th>
                             <th>Số lượng</th>
                             <th>Đơn giá</th>
                             <th>Thành tiền</th>
@@ -76,15 +77,16 @@
                             $tongTien += $thanhTien;
                         ?>
                             <tr>
-                                <td class="duLieuSo"><img src="<?php echo $chiTiet['Anh']; ?>" alt="Ảnh sản phẩm" style="max-width: 100px;"></td>
+                                <td class="duLieuSo"><?php echo $chiTiet["MaSanPham"]; ?></td>
                                 <td><?php echo $chiTiet['TenSanPham']; ?></td>
+                                <td class="duLieuSo"><img src="<?php echo $chiTiet['Anh']; ?>" alt="Ảnh sản phẩm" style="max-width: 100px;"></td>
                                 <td class="duLieuSo"><?php echo $chiTiet['SoLuong']; ?></td>
                                 <td class="duLieuSo"><?php echo number_format($chiTiet['DonGia'], 0, ',', '.'); ?> VNĐ</td>
                                 <td class="duLieuSo"><?php echo number_format($thanhTien, 0, ',', '.'); ?> VNĐ</td>
                             </tr>
                         <?php } ?>
                         <tr>
-                            <td colspan="4" class="text-end"><strong>Tổng tiền:</strong></td>
+                            <td colspan="5" class="text-end"><strong>Tổng tiền:</strong></td>
                             <td class="duLieuSo"><?php echo number_format($tongTien, 0, ',', '.'); ?> VNĐ</td>
                         </tr>
                     </tbody>

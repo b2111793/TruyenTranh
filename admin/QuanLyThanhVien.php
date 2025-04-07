@@ -25,7 +25,7 @@
 
         <div class="card mb-4">
             <div class="card-header">
-                <b><i class="fas fa-users me-1"></i> Danh sách thành viên</b>
+                <b><i class="fas fa-users me-2"></i>Danh sách thành viên</b>
             </div>
             <div class="card-body">
                 <table id="duLieuBang">
@@ -59,16 +59,16 @@
                                 <td class="duLieuSo">
 
                                     <a href="#" class="btn btn-danger btn-xoa-thanh-vien" data-id="<?php echo $cot["TenDangNhap"]; ?>">
-                                        <i class="fas fa-trash me-1"></i> Xóa
+                                        <i class="fas fa-trash me-2"></i>Xóa
                                     </a>
                                     <br> <br>
                                     <?php if ($cot['TrangThai'] == 'Kích hoạt') { ?>
                                         <a href="./KhoaThanhVien.php?tenDangNhap=<?php echo $cot['TenDangNhap']; ?>" class="btn btn-secondary">
-                                            <i class="fas fa-lock"></i> Khóa
+                                            <i class="fas fa-lock me-2"></i>Khóa
                                         </a>
                                     <?php } else { ?>
                                         <a href="./MoKhoaThanhVien.php?tenDangNhap=<?php echo $cot['TenDangNhap']; ?>" class="btn btn-success">
-                                            <i class="fas fa-unlock"></i> Mở khóa
+                                            <i class="fas fa-unlock me-2"></i>Mở khóa
                                         </a>
                                     <?php } ?>
                                 </td>

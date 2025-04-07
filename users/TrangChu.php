@@ -14,6 +14,8 @@
 	$truyVan_LaySanPham = mysqli_query($conn, $laySanPham);
 	$cot1 = mysqli_fetch_array($truyVan_LaySanPhamGiaMax);
 	$cot2 = mysqli_fetch_array($truyVan_LaySanPhamGiaMin);
+	$maSanPham1 = $cot1["MaSanPham"];
+	$maSanPham2 = $cot2["MaSanPham"];
 
 ?>
 <!--banner-starts-->
@@ -53,11 +55,27 @@
 				<div class="col-md-6 banner-bottom-left">
 					<div class="bnr-one">
 						<div class="bnr-left">
-							<h1><a href="ChiTietSanPham.php?MaSanPham=<?php echo $cot1["MaSanPham"]; ?>">
+							<h1><a href="ChiTietSanPham.php?MaSanPham=<?php echo $maSanPham1; ?>">
 								<?php echo $cot1["TenSanPham"]; ?></a></h1>
 							<p>Sản phẩm nằm top !!!</p>
-							<div class="b-btn"> 
-								<a href="ChiTietSanPham.php?MaSanPham=<?php echo $cot1["MaSanPham"]; ?>">MUA NGAY</a>
+							<div class="single-but item_add">
+								<?php if (isset($_SESSION["tenDangNhap"])) { ?>
+									<span> 
+										<i class="far fa-heart heart-icon" data-product-id="<?php echo $maSanPham1; ?>"></i>
+									</span>
+									<button 
+										type="button" 
+										class="btn btn-success btn-them-gio-hang"
+										style="<?php echo ($cot1["SoLuong"] == 0) ? 'cursor: not-allowed !important; opacity: 0.5;' : ''; ?>" 
+										<?php echo ($cot1["SoLuong"] > 0) ? 'onclick="them_gioHang('.$maSanPham1.', 1)"' : ''; ?>
+									>
+										Thêm vào giỏ hàng
+									</button>                   
+								<?php } else { ?>
+									<a data-toggle="modal" data-target="#largeModal_dn" href="#" class="btn btn-success btn-them-gio-hang" style="margin: auto;">
+										Thêm vào giỏ hàng
+									</a>
+								<?php } ?>
 							</div>
 						</div>
 						<div class="bnr-right"> 
@@ -74,8 +92,24 @@
 							<h1><a href="ChiTietSanPham.php?MaSanPham=<?php echo $cot2["MaSanPham"]; ?>">
 								<?php echo $cot2["TenSanPham"]; ?></a></h1>
 							<p>Sản phẩm giá siêu hời !!!</p>
-							<div class="b-btn"> 
-								<a href="ChiTietSanPham.php?MaSanPham=<?php echo $cot2["MaSanPham"]; ?>">MUA NGAY</a>
+							<div class="single-but item_add">
+								<?php if (isset($_SESSION["tenDangNhap"])) { ?>
+									<span> 
+										<i class="far fa-heart heart-icon" data-product-id="<?php echo $maSanPham2; ?>"></i>
+									</span>
+									<button 
+										type="button" 
+										class="btn btn-success btn-them-gio-hang"
+										style="<?php echo ($cot2["SoLuong"] == 0) ? 'cursor: not-allowed !important; opacity: 0.5;' : ''; ?>" 
+										<?php echo ($cot2["SoLuong"] > 0) ? 'onclick="them_gioHang('.$maSanPham2.', 1)"' : ''; ?>
+									>
+										Thêm vào giỏ hàng
+									</button>                   
+								<?php } else { ?>
+									<a data-toggle="modal" data-target="#largeModal_dn" href="#" class="btn btn-success btn-them-gio-hang" style="margin: auto;">
+										Thêm vào giỏ hàng
+									</a>
+								<?php } ?>
 							</div>
 						</div>
 						<div class="bnr-right"> 
@@ -98,6 +132,7 @@
 				$index = 0;
 				while($cot = mysqli_fetch_array($truyVan_LaySanPham)) {
 					$index++;
+					$maSanPham = $cot["MaSanPham"];
 			?>
 				<div class="product-one">
 					<div class="col-md-3 product-left"> 
@@ -114,9 +149,25 @@
 									<?php echo number_format($cot["DonGia"], 0, ',', '.'); ?> đ 
 								</span></a>
 							</p>
-							<button type="button" class="btn btn-success" style="margin-top: 10px;"
-								onclick="them_gioHang(<?php echo $cot['MaSanPham']; ?>, 1)">Thêm vào giỏ hàng
-							</button>
+							<div class="single-but item_add">
+								<?php if (isset($_SESSION["tenDangNhap"])) { ?>
+									<span> 
+										<i class="far fa-heart heart-icon" data-product-id="<?php echo $maSanPham; ?>"></i>
+									</span>
+									<button 
+										type="button" 
+										class="btn btn-success btn-them-gio-hang"
+										style="<?php echo ($cot["SoLuong"] == 0) ? 'cursor: not-allowed !important; opacity: 0.5;' : ''; ?>" 
+										<?php echo ($cot["SoLuong"] > 0) ? 'onclick="them_gioHang('.$maSanPham.', 1)"' : ''; ?>
+									>
+										Thêm vào giỏ hàng
+									</button>                   
+								<?php } else { ?>
+									<a data-toggle="modal" data-target="#largeModal_dn" href="#" class="btn btn-success btn-them-gio-hang" style="margin: auto;">
+										Thêm vào giỏ hàng
+									</a>
+								<?php } ?>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -166,6 +217,22 @@
 		</div>
 	</div>
 	<!--end-abt-shoe-->
+<script>
+	$(document).ready(function(){
+		$('.heart-icon').on('click', function() {
+            let icon = $(this);
+            let maSanPham = icon.data('product-id');
+
+            if (icon.hasClass('liked')) {
+                // Nếu đã yêu thích, gọi hàm xóa
+                xoa_yeuThich(maSanPham);
+            } else {
+                // Nếu chưa yêu thích, gọi hàm thêm
+                them_yeuThich(maSanPham);
+            }
+        });
+	});
+</script>
 
 <?php
 	include('../shared/footer.php');

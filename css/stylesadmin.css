@@ -55,3 +55,48 @@ th.sorting_desc::after, th.sorting_desc::before {
 th.active-sorting::after, th.active-sorting::before {
     display: inline-block !important; /* Hiện lại khi cột được chọn */
 }
+
+/* Quản lý danh mục */
+.quan-ly-danh-muc {
+    background-color: #4A90E2;
+}
+
+/* Quản lý sản phẩm */
+.quan-ly-san-pham {
+    background-color: #7F9CF5;
+}
+
+/* Quản lý thành viên */
+.quan-ly-thanh-vien {
+    background-color: #68D391;
+}
+
+/* Quản lý đơn hàng */
+.quan-ly-don-hang {
+    background-color: #F6AD55;
+}
+
+/* Quản lý bình luận */
+.quan-ly-binh-luan {
+    background-color: #A0AEC0;
+}
+
+/* Thống kê doanh thu */
+.thong-ke-doanh-thu {
+    background-color: #F6E05E;
+}
+
+/* Thống kê đánh giá */
+.thong-ke-danh-gia {
+    background-color: #63B3ED;
+}
+
+/* Thống kê yêu thích */
+.thong-ke-yeu-thich {
+    background-color: #F687B3;
+}
+
+/* Sản phẩm bán chạy nhất (nếu thêm vào) */
+.san-pham-ban-chay-nhat {
+    background-color: #FC8181;
+}

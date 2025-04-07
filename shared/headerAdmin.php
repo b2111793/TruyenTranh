@@ -52,7 +52,7 @@
     ?>
 
     <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-light bg-light">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="../admin/Admin.php"><b>Admin</b></a>
             <!-- Sidebar Toggle-->
@@ -67,10 +67,10 @@
                         <i class="fas fa-user fa-fw"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="./Admin.php"><i class="fas fa-user-shield me-1"></i>Admin</a></li>
+                        <li><a class="dropdown-item" href="./Admin.php"><i class="fas fa-user me-2"></i>Admin</a></li>
                         <li><hr class="dropdown-divider"/></li>
                         <li><a href="#" class="dropdown-item btn btn-danger btn-dang-xuat-admin">
-                                <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất</a>
+                                <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất</a>
                         </li>
                     </ul>
                 </li>
@@ -103,7 +103,7 @@
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <!-- sb-sidenav-light để nền trắng -->
-                <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <!-- Trang chủ -->
@@ -111,19 +111,18 @@
 
                             <!-- QUẢN LÝ  -->
                             <div class="sb-sidenav-menu-heading">Quản lý</div>
-                            <a class="nav-link" href="../admin/QuanLyDanhMuc.php"><i class="fas fa-tags me-1"></i>Danh mục</a>
-                            <a class="nav-link" href="../admin/QuanLySanPham.php"><i class="fas fa-book me-1"></i>Sản phẩm</a>
-                            <a class="nav-link" href="../admin/QuanLyThanhVien.php"><i class="fas fa-user me-1"></i>Thành viên</a>
-                            <a class="nav-link" href="../admin/QuanLyDonHang.php"><i class="fas fa-box me-1"></i>Đơn hàng</a>
-                            <a class="nav-link" href="../admin/QuanLyBinhLuan.php"><i class="fas fa-comment-dots me-1"></i>Bình luận</a>
+                            <a class="nav-link" href="../admin/QuanLyDanhMuc.php"><i class="fas fa-tags me-2"></i>Danh mục</a>
+                            <a class="nav-link" href="../admin/QuanLySanPham.php"><i class="fas fa-book me-2"></i>Sản phẩm</a>
+                            <a class="nav-link" href="../admin/QuanLyThanhVien.php"><i class="fas fa-users me-2"></i>Thành viên</a>
+                            <a class="nav-link" href="../admin/QuanLyDonHang.php"><i class="fas fa-box me-2"></i>Đơn hàng</a>
+                            <a class="nav-link" href="../admin/QuanLyBinhLuan.php"><i class="fas fa-comment-dots me-2"></i>Bình luận</a>
 
                             <!-- THỐNG KÊ -->
                             <div class="sb-sidenav-menu-heading">Thống kê</div>
-                            <a class="nav-link" href="../admin/ThongKeDoanhThu.php"><i class="fas fa-dollar-sign me-1"></i>Doanh thu</a>
-                            <a class="nav-link" href="../admin/ThongKeTrangThai.php"><i class="fas fa-clipboard-list me-1"></i>Trạng thái đơn</a>
-                            <a class="nav-link" href="../admin/ThongKeBanChay.php"><i class="fas fa-fire me-1"></i>Bán chạy</a>
-                            <a class="nav-link" href="../admin/ThongKeDanhGia.php"><i class="fas fa-star me-1"></i>Đánh giá</a>
-                            <a class="nav-link" href="../admin/ThongKeYeuThich.php"><i class="fas fa-heart me-1"></i>Yêu thích</a>
+                            <a class="nav-link" href="../admin/ThongKeDoanhThu.php"><i class="fas fa-dollar-sign me-2"></i>Doanh thu</a>
+                            <a class="nav-link" href="../admin/ThongKeBanChay.php"><i class="fas fa-fire me-2"></i>Bán chạy</a>
+                            <a class="nav-link" href="../admin/ThongKeDanhGia.php"><i class="fas fa-star me-2"></i>Đánh giá</a>
+                            <a class="nav-link" href="../admin/ThongKeYeuThich.php"><i class="fas fa-heart me-2"></i>Yêu thích</a>
                         </div>
                     </div>
                     

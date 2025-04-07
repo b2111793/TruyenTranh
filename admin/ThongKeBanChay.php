@@ -31,7 +31,7 @@
     
         <div class="card mb-4">
             <div class="card-header">
-                <b><i class="fas fa-box"></i> Sản phẩm bán chạy</b>
+                <b><i class="fas fa-box me-2"></i>Sản phẩm bán chạy</b>
         </div>
         <div class="card-body">
             <table id="duLieuBang">

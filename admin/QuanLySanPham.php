@@ -26,12 +26,12 @@
         </ol>
         <div class="card-body mb-2">
             <a href="./ThemSanPham.php" class="btn btn-success">
-                <i class="fas fa-plus"></i> Thêm sản phẩm
+                <i class="fas fa-plus me-2"></i>Thêm sản phẩm
             </a>
         </div>
         <div class="card mb-4">
             <div class="card-header">
-            <i class="fas fa-scroll"></i> Các thông tin chi tiết truyện tranh</b>
+            <i class="fas fa-scroll me-2"></i>Các thông tin chi tiết truyện tranh</b>
         </div>
             <div class="card-body">
                 <table id="duLieuBang">
@@ -57,12 +57,12 @@
                                 <td class="duLieuSo"><?php echo number_format($cot["DonGia"], 0, ',', '.'); ?></td>
                                 <td class="duLieuSo">
                                     <a href="./SuaSanPham.php?maSanPham=<?php echo $cot["MaSanPham"]; ?>" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Sửa</a>
+                                        <i class="fas fa-edit me-2"></i>Sửa</a>
                                     <a href="#" class="btn btn-danger btn-xoa-san-pham" data-id="<?php echo $cot["MaSanPham"]; ?>">
-                                        <i class="fas fa-trash me-1"></i> Xóa
+                                        <i class="fas fa-trash me-2"></i>Xóa
                                     </a>
                                     <a href="./ChiTietSanPhamAdmin.php?maSanPham=<?php echo $cot["MaSanPham"]; ?>"
-                                        class="btn btn-info"><i class="fas fa-angle-double-down"></i> Xem chi tiết</a>
+                                        class="btn btn-info"><i class="fas fa-angle-double-down me-2"></i>Xem chi tiết</a>
                                 </td>
                             </tr>
                         <?php } ?>

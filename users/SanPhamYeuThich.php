@@ -1,24 +1,24 @@
 <?php 
-    include('../shared/header.php');
-    if (!isset($_SESSION["tenDangNhap"])) {
-        echo "<script> window.location.href = '../shared/DangNhap.php'; </script>";
+include('../shared/header.php');
+if (!isset($_SESSION["tenDangNhap"])) {
+    echo "<script> window.location.href = '../shared/DangNhap.php'; </script>";
+    exit;
+}
+// Kiểm tra trạng thái đăng nhập
+if (isset($_SESSION["tenDangNhap"])) {
+    if ($_SESSION["quyen"] == "Admin") {
+        echo "<script> window.location.href = '../admin/TrangChuAdmin.php'; </script>";
         exit;
-    }
-    // Kiểm tra trạng thái đăng nhập
-    if (isset($_SESSION["tenDangNhap"])) {
-        if ($_SESSION["quyen"] == "Admin") {
-            echo "<script> window.location.href = '../admin/TrangChuAdmin.php'; </script>";
-            exit;
-        } 
-    }
+    } 
+}
 
-    $tenDangNhap = mysqli_real_escape_string($conn, $_SESSION["tenDangNhap"]);
-    // Lấy danh sách sản phẩm yêu thích
-    $layYeuThich = "SELECT yt.*, sp.TenSanPham, sp.DonGia, sp.Anh 
-                    FROM yeuthich yt 
-                    JOIN sanpham sp ON yt.MaSanPham = sp.MaSanPham 
-                    WHERE yt.TenDangNhap = '$tenDangNhap'";
-    $truyVan_LayYeuThich = mysqli_query($conn, $layYeuThich);
+$tenDangNhap = mysqli_real_escape_string($conn, $_SESSION["tenDangNhap"]);
+// Lấy danh sách sản phẩm yêu thích
+$layYeuThich = "SELECT yt.*, sp.TenSanPham, sp.DonGia, sp.Anh 
+                FROM yeuthich yt 
+                JOIN sanpham sp ON yt.MaSanPham = sp.MaSanPham 
+                WHERE yt.TenDangNhap = '$tenDangNhap'";
+$truyVan_LayYeuThich = mysqli_query($conn, $layYeuThich);
 ?>
 
 <!--start-breadcrumbs-->
@@ -51,13 +51,13 @@
                     if (mysqli_num_rows($truyVan_LayYeuThich) == 0) {
                         echo "<p>Bạn chưa có sản phẩm yêu thích nào.</p>";
                     } else {
-                            $soSanPham = 0;
-                            $soSanPhamToiDa = 5;
+                        $soSanPham = 0;
+                        $soSanPhamToiDa = 5;
                         while ($cotYeuThich = mysqli_fetch_assoc($truyVan_LayYeuThich)) { 
                             $soSanPham++;
                             $classAn = ($soSanPham > $soSanPhamToiDa) ? 'anDoiTuong' : '';
                     ?>
-                    <ul class="cart-header <?php echo $classAn ?>">
+                    <ul class="cart-header <?php echo $classAn ?>" data-product-id="<?php echo $cotYeuThich['MaSanPham']; ?>">
                         <li class="ring-in">
                             <a href="./ChiTietSanPham.php?MaSanPham=<?php echo $cotYeuThich['MaSanPham']; ?>">
                                 <img style="width: 100px;" src="<?php echo $cotYeuThich['Anh']; ?>" class="img-responsive" alt="Ảnh sản phẩm">
@@ -80,6 +80,8 @@
                     <?php } } ?>
                     <script>
                         $(document).ready(function () {
+                            capNhatTrangThaiNutXemThem();
+
                             $("#xemThemYeuThich").click(function () {
                                 $(".anDoiTuong").slideDown(); 
                                 $(this).hide();
@@ -92,6 +94,24 @@
                                 $("#xemThemYeuThich").show(); 
                             });
                         });
+
+                        function capNhatTrangThaiNutXemThem() {
+                            const soSanPhamToiDa = 5;
+                            const soSanPhamHienTai = $('.cart-header').length;
+
+                            if (soSanPhamHienTai <= soSanPhamToiDa) {
+                                $('#xemThemYeuThich').hide();
+                                $('#anYeuThich').hide();
+                            } else {
+                                if ($('.anDoiTuong:visible').length > 0) {
+                                    $('#xemThemYeuThich').hide();
+                                    $('#anYeuThich').show();
+                                } else {
+                                    $('#xemThemYeuThich').show();
+                                    $('#anYeuThich').hide();
+                                }
+                            }
+                        }
                     </script>
                 </div>
                 <a href="./SanPham.php" class="add-cart add-check" 
