@@ -51,10 +51,10 @@
                 <p><strong>Giới thiệu:</strong> <?php echo $sanPham["GioiThieu"]; ?></p>
                 <p><strong>Ảnh mô tả:</strong></p>
                 <div>
-                    <img height="400px" src="<?php echo $sanPham["Anh"]; ?>" alt="Ảnh sản phẩm">
-                    <img height="400px" src="<?php echo $sanPham["AnhMoTa1"]; ?>" alt="Ảnh sản phẩm">
-                    <img height="400px" src="<?php echo $sanPham["AnhMoTa2"]; ?>" alt="Ảnh sản phẩm">
-                    <img height="400px" src="<?php echo $sanPham["AnhMoTa3"]; ?>" alt="Ảnh sản phẩm">
+                    <img height="300px" src="<?php echo $sanPham["Anh"]; ?>" alt="Ảnh sản phẩm">
+                    <img height="300px" src="<?php echo $sanPham["AnhMoTa1"]; ?>" alt="Ảnh sản phẩm">
+                    <img height="300px" src="<?php echo $sanPham["AnhMoTa2"]; ?>" alt="Ảnh sản phẩm">
+                    <img height="300px" src="<?php echo $sanPham["AnhMoTa3"]; ?>" alt="Ảnh sản phẩm">
                 </div>
                 <br>
                 <a href="./QuanLySanPham.php" class="btn btn-secondary">Quay về trang sản phẩm</a>

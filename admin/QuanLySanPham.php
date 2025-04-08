@@ -31,7 +31,7 @@
         </div>
         <div class="card mb-4">
             <div class="card-header">
-            <i class="fas fa-scroll me-2"></i>Các thông tin chi tiết truyện tranh</b>
+            <i class="fas fa-book me-2"></i>Các thông tin chi tiết truyện tranh</b>
         </div>
             <div class="card-body">
                 <table id="duLieuBang">
@@ -76,7 +76,7 @@
     $(document).ready(function(){
         $('#duLieuBang').DataTable({
             "lengthMenu": [5, 10, 15, 20],
-            "pageLength": 10,
+            "pageLength": 5,
             "paging": true,
             "autoWidth": false,
             "columns": [

@@ -77,23 +77,12 @@
 		<p style="color: #ffcc00;">Chào mừng bạn đến với website bán truyện tranh</p>
 		
 		<div class="row justify-content-center">
-			<!-- Đăng nhập Admin -->
-			<!-- <div class="col-md-4">
-				<div class="card border-danger">
-					<div class="card-body">
-						<h5 class="card-title text-danger">Admin</h5>
-						<p class="card-text">Dành cho quản trị viên quản lý hệ thống.</p>
-						<a href="./admin/DangNhapAdmin.php" class="btn btn-danger">Tham gia</a>
-					</div>
-				</div>
-			</div> -->
-			<!-- Đăng nhập Khách hàng -->
 			<div class="col-md-4">
 				<div class="card border-primary">
 					<div class="card-body">
 						<h5 class="card-title text-primary">Thế giới truyện tranh</h5>
 						<p class="card-text">Cùng tham quan và mua sắm.</p>
-						<a href="./users/TrangChu.php" class="btn btn-primary">Tham gia</a>
+						<a href="./users/TrangChu.php" class="btn btn-primary">Vào</a>
 					</div>
 				</div>
 			</div>

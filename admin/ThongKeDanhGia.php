@@ -27,7 +27,7 @@
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="./TrangChuAdmin.php">Trang chủ</a></li>
             <li class="breadcrumb-item">Thống kê</li>
-            <li class="breadcrumb-item active">Sản phẩm được đánh giá nhiều nhất</li>
+            <li class="breadcrumb-item active">Đánh giá</li>
         </ol>
     
         <div class="card mb-4">

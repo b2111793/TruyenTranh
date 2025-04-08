@@ -102,12 +102,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input id="matKhauNhapLai" name="matKhauNhapLai" type="password" required>
                     </div>
                     <div class="address">
-                        <span>Họ tên</span>
-                        <input id="hoTen" name="hoTen" type="text">
+                        <span>Họ tên <span style="color: red;">*</span></span>
+                        <input id="hoTen" name="hoTen" type="text" required>
                     </div>
                     <div class="address">
                         <span>Ngày sinh <span style="color: red;">*</span></span>
-                        <input id="ngaySinh" name="ngaySinh" type="date">
+                        <input id="ngaySinh" name="ngaySinh" type="date" required>
                     </div>
                     <div class="address">
                         <span>Giới tính</span>
@@ -115,12 +115,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input name="gioiTinh" type="radio" value="Nữ"> Nữ
                     </div>
                     <div class="address">
-                        <span>Địa chỉ</span>
-                        <input id="diaChi" name="diaChi" type="text">
+                        <span>Địa chỉ <span style="color: red;">*</span></span>
+                        <input id="diaChi" name="diaChi" type="text" required>
                     </div>
                     <div class="address">
                         <span>Điện thoại <span style="color: red;">*</span></span>
-                        <input id="dienThoai" name="dienThoai" type="text">
+                        <input id="dienThoai" name="dienThoai" type="text" required>
                     </div>
                     <div class="address">
                         <span>Email <span style="color: red;">*</span></span>
@@ -176,8 +176,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             let tenDangNhap = $('#tenDangNhap').val();
             let matKhau = $('#matKhau').val();
             let matKhauNhapLai = $('#matKhauNhapLai').val();
+            let hoTen = $('#hoTen').val();
             let ngaySinh = $('#ngaySinh').val();
-
+            let diaChi = $('#diaChi').val();
             let ngaySinhTinhGio = new Date(ngaySinh).setHours(0, 0, 0, 0);
             let ngayHomNay = new Date().setHours(0, 0, 0, 0);
             let dienThoai = $('#dienThoai').val();

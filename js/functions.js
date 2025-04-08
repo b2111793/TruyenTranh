@@ -431,6 +431,7 @@ function xoa_binhLuan(maBinhLuan, maSanPham) {
 }
 
 function sua_binhLuan(maBinhLuan, maSanPham, noiDung) {
+    console.log(maBinhLuan);
     $.ajax({
         url: "../ajax/SuaBinhLuanAjax.php",
         type: "POST",

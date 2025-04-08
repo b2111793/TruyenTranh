@@ -86,8 +86,15 @@
                             </tr>
                         <?php } ?>
                         <tr>
+                            <?php 
+                                $phiShip = 0;
+                                $phiShip = ($tongTien > 300000) ? 0 : 30000; ?>
+                            <td colspan="5" class="text-end"><strong>Phí giao hàng:</strong></td>
+                            <td class="duLieuSo"><?php echo number_format($phiShip, 0, ',', '.'); ?> VNĐ</td>
+                        </tr>
+                        <tr>
                             <td colspan="5" class="text-end"><strong>Tổng tiền:</strong></td>
-                            <td class="duLieuSo"><?php echo number_format($tongTien, 0, ',', '.'); ?> VNĐ</td>
+                            <td class="duLieuSo"><?php echo number_format($tongTien+$phiShip, 0, ',', '.'); ?> VNĐ</td>
                         </tr>
                     </tbody>
                 </table>

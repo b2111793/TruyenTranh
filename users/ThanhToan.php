@@ -38,6 +38,9 @@
         $tongTienGioHang += $cotGioHang["soLuong"] * $cotGioHang["donGia"];
     }
 
+    // Phí ship 30.000đ cho mỗi đơn, 0đ đối với đơn > 300.000đ
+    $phiShip = ($tongTienGioHang > 300000) ? 0 : 30000;
+
     // Xử lý đặt hàng
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['datHang'])) {
         // Kiểm tra số lượng tồn kho
@@ -190,9 +193,9 @@
                     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?hinhThuc=' . $hinhThucThanhToan; ?>">
                         <ul class="unit">
                             <li><span>Thông tin khách hàng</span></li>
-                            <li><span></span></li>
                             <li><span>Ngày đặt</span></li>        
                             <li><span>Tổng sản phẩm</span></li>
+                            <li><span>Phí giao hàng</span></li>
                             <li><span>Tổng tiền</span></li>
                             <div class="clearfix"></div>
                         </ul>
@@ -201,13 +204,13 @@
                                 <span style="text-align: left;">
                                     Tên khách hàng: <input type="text" value="<?php echo htmlspecialchars($cotThanhVien['HoTen']); ?>" readonly><br>
                                     Số điện thoại: <input type="number" name="dienThoai" value="<?php echo htmlspecialchars($cotThanhVien['DienThoai']); ?>" required><br>
-                                    Nơi giao: <textarea style="width: 300px;" rows="4" id="noiGiao" name="noiGiao" required><?php echo htmlspecialchars($cotThanhVien['DiaChi']); ?></textarea>
+                                    Nơi giao: <textarea style="width: 100%;" rows="4" id="noiGiao" name="noiGiao" required><?php echo htmlspecialchars($cotThanhVien['DiaChi']); ?></textarea>
                                 </span>
                             </li>
-                            <li><span></span></li>
                             <li><span><?php echo date("d/m/Y"); ?></span></li>
                             <li><span><?php echo count($_SESSION['gioHang']); ?></span></li>
-                            <li><span><?php echo number_format($tongTienGioHang, 0, ',', '.'); ?> đ</span></li>
+                            <li><span><?php echo number_format($phiShip, 0, ',', '.'); ?> đ</span></li>
+                            <li><span><?php echo number_format($tongTienGioHang+$phiShip, 0, ',', '.'); ?> đ</span></li>
                             <div class="clearfix"></div>
                         </ul>
                         <a class="btn btn-primary" href="./GioHang.php">Quay lại</a>

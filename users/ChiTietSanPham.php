@@ -11,7 +11,7 @@
         exit;
     }
 
-    $maSanPham = mysqli_real_escape_string($conn, $_GET["MaSanPham"]);
+    $maSanPham = intval($_GET["MaSanPham"]);
     $laySanPham = "SELECT * FROM sanpham WHERE MaSanPham = '$maSanPham'";
     $truyVan_LaySanPham = mysqli_query($conn, $laySanPham);
     if (mysqli_num_rows($truyVan_LaySanPham) == 0) {
@@ -22,7 +22,7 @@
     $cot = mysqli_fetch_assoc($truyVan_LaySanPham);
 
     // Lấy sản phẩm liên quan
-    $laySanPham_LienQuan = "SELECT * FROM sanpham WHERE MaLoaiSP = '" . mysqli_real_escape_string($conn, $cot["MaLoaiSP"]) . "' AND MaSanPham != '$maSanPham' ORDER BY DonGia DESC LIMIT 0,6";
+    $laySanPham_LienQuan = "SELECT * FROM sanpham WHERE MaLoaiSP = '" . intval($cot["MaLoaiSP"]) . "' AND MaSanPham != '$maSanPham' ORDER BY DonGia DESC LIMIT 0,6";
     $truyVan_LaySanPham_LienQuan = mysqli_query($conn, $laySanPham_LienQuan);
 
     $tenDangNhap = "";
@@ -30,18 +30,30 @@
         $tenDangNhap = mysqli_real_escape_string($conn, $_SESSION["tenDangNhap"]);
 
     $choPhepBinhLuan = $choPhepDanhGia = false;
-    // Kiểm tra điều điện để đánh giá, bình luận
-    $kiemTraDonHang = " SELECT dd.MaDonDat
-                        FROM dondat dd
-                        INNER JOIN ct_dondat ctdd 
-                        ON dd.MaDonDat = ctdd.MaDonDat
-                        AND ctdd.MaSanPham = '$maSanPham'
-                        AND dd.TrangThai = 'Đã giao'
-                        LIMIT 1";        
-    $truyVan_KiemTraDonHang = mysqli_query($conn, $kiemTraDonHang);
-    if (mysqli_num_rows($truyVan_KiemTraDonHang) > 0) {
-        $choPhepBinhLuan = $choPhepDanhGia = true;
+    // Kiểm tra điều kiện để đánh giá, bình luận
+    if (!empty($tenDangNhap)) { // Chỉ thực hiện truy vấn nếu người dùng đã đăng nhập
+        $kiemTraDonHang = "SELECT dd.MaDonDat
+                            FROM dondat dd
+                            JOIN ct_dondat ctdd 
+                            ON dd.MaDonDat = ctdd.MaDonDat
+                            WHERE ctdd.MaSanPham = '$maSanPham'
+                            AND dd.TrangThai = 'Đã giao'
+                            AND dd.TenDangNhap = '$tenDangNhap'
+                            LIMIT 1";        
+        $truyVan_KiemTraDonHang = mysqli_query($conn, $kiemTraDonHang);
+        
+        if ($truyVan_KiemTraDonHang === false) {
+            // Xử lý lỗi truy vấn
+            $_SESSION['toastr'] = ['type' => 'error', 'message' => 'Lỗi truy vấn cơ sở dữ liệu: ' . mysqli_error($conn)];
+            echo "<script> window.location.href = './ChiTietSanPham.php?MaSanPham=$maSanPham'; </script>";
+            exit;
+        }
+    
+        if (mysqli_num_rows($truyVan_KiemTraDonHang) > 0) {
+            $choPhepBinhLuan = $choPhepDanhGia = true;
+        }
     }
+
     // Đánh giá
     $soNguoiDanhGia = $soSaoTrungBinh = $tongSoSao = 0;
     $layDanhGia = "SELECT * FROM danhgia WHERE MaSanPham = '$maSanPham'";
@@ -133,8 +145,10 @@
                     <div class="col-md-7 single-top-right">
                         <!-- ĐÁNH GIÁ -->
                         <div class="details-left-info simpleCart_shelfItem">
-                            <h3><?php echo htmlspecialchars($cot["TenSanPham"]); ?></h3>
-                            <?php if (isset($_SESSION["tenDangNhap"]) && $choPhepDanhGia) { ?> 
+                            <h3><?php echo $cot["TenSanPham"]; ?></h3>
+                            <?php if (isset($_SESSION["tenDangNhap"]) && $choPhepDanhGia) { 
+                             
+                            ?> 
                             <ul class="saoDanhGia">
                                 <li class="sao sao1" data-sao="1" onclick="danh_gia(<?php echo $maSanPham; ?>,'<?php echo $tenDangNhap; ?>', 1)"></li>
                                 <li class="sao sao2" data-sao="2" onclick="danh_gia(<?php echo $maSanPham; ?>,'<?php echo $tenDangNhap; ?>', 2)"></li>
@@ -167,7 +181,7 @@
 
                             <div class="quantity_box">
                                 <ul class="product-qty">
-                                    <span>Số lượng:</span> 
+                                    <span>Số lượng tồn kho: <?php echo $cot["SoLuong"]; ?></span> 
                                     
                                     <div class="tangGiamSoLuong">
                                         <button class="giamSoLuong">-</button>
@@ -215,7 +229,7 @@
                     <form id="binhLuanForm" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?MaSanPham=<?php echo $maSanPham; ?>">
                         <textarea id="noiDungBinhLuan" name="noiDungBinhLuan" class="form-control" rows="4" placeholder="Nhập nội dung bình luận ..."></textarea>
                         <div class="single-but item_add" style="text-align: right;">
-                            <input type="submit" value="Bình luận"/>
+                            <input style="border-radius: 4px;" type="submit" value="Bình luận"/>
                         </div>
                     </form>
                 <?php } } else { echo "Bạn hãy đăng nhập để xem bình luận về sản phẩm này!"; } ?>
@@ -235,17 +249,15 @@
                         <div class="binhLuan <?php echo $classAn; ?>">
                             <hr style="width: 70%;">
                             <div>
-                                <span class="binhLuanTen"><?php echo htmlspecialchars($cotBinhLuan["HoTen"]); ?></span>
+                                <span class="binhLuanTen"><?php echo $cotBinhLuan["HoTen"]; ?></span>
                                 <span class="binhLuanNgay">đã bình luận vào ngày <?php echo date("d/m/Y", strtotime($cotBinhLuan["NgayBinhLuan"])); ?></span>
-                                <?php if (isset($_SESSION["tenDangNhap"]) && ($cotBinhLuan["TenDangNhap"] == $_SESSION["tenDangNhap"]) && $choPhepBinhLuan) { ?>
+                                <?php if (isset($_SESSION["tenDangNhap"]) && ($_SESSION["tenDangNhap"] == $cotBinhLuan["TenDangNhap"])) { ?>
                                     <span class="fas fa-times binhLuan_iconXoa" onclick="xoa_binhLuan(<?php echo $cotBinhLuan['MaBinhLuan']; ?>, <?php echo $cotBinhLuan['MaSanPham']; ?>)"></span>
                                     <span class="fas fa-pencil binhLuan_iconSua" data-toggle="modal" data-target="#largeModal_suaBL"></span>
                                 <?php } ?>
                                 <input type="hidden" id="lay_maBL" value="<?php echo $cotBinhLuan["MaBinhLuan"]; ?>">
                                 <input type="hidden" id="lay_noiDungBL" value="<?php echo $cotBinhLuan["NoiDung"]; ?>">
-                                <div class="binhLuanNoiDung">
-                                    <?php echo $cotBinhLuan["NoiDung"]; ?>
-                                </div>
+                                <div class="binhLuanNoiDung"><?php echo $cotBinhLuan["NoiDung"]; ?></div>
                             </div>
                         </div>
                     </div>
@@ -265,7 +277,7 @@
                             $index = 0;
                             while ($cotLienQuan = mysqli_fetch_assoc($truyVan_LaySanPham_LienQuan)) {
                                 $index++;
-                                $maSanPham = $cotLienQuan["MaSanPham"];
+                                $maSanPhamLienQuan = $cotLienQuan["MaSanPham"];
                             ?>
                                 <div class="product-one">
                                     <div class="col-md-4 product-left single-left"> 
@@ -286,13 +298,13 @@
                                             <div class="single-but item_add">
                                                 <?php if (isset($_SESSION["tenDangNhap"])) { ?>
                                                     <span> 
-                                                        <i class="far fa-heart heart-icon" data-product-id="<?php echo $maSanPham; ?>"></i>
+                                                        <i class="far fa-heart heart-icon" data-product-id="<?php echo $maSanPhamLienQuan; ?>"></i>
                                                     </span>
                                                     <button 
                                                         type="button" 
                                                         class="btn btn-success btn-them-gio-hang"
                                                         style="<?php echo ($cot["SoLuong"] == 0) ? 'cursor: not-allowed !important; opacity: 0.5;' : ''; ?>" 
-                                                        <?php echo ($cot["SoLuong"] > 0) ? 'onclick="them_gioHang('.$maSanPham.', 1)"' : ''; ?>
+                                                        <?php echo ($cot["SoLuong"] > 0) ? 'onclick="them_gioHang('.$maSanPhamLienQuan.', 1)"' : ''; ?>
                                                     >
                                                         Thêm vào giỏ hàng
                                                     </button>                   
@@ -388,7 +400,7 @@
                     </div>
                     <div class="address">
                         <span id="thongBao_suaBinhLuan" style="color: red;"></span>
-                        <input type="submit" value="Lưu" style="float: right;">
+                        <input style="border-radius: 4px" type="submit" value="Lưu" style="float: right;">
                     </div>
                 </form>
             </div>
